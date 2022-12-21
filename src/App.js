@@ -3,21 +3,21 @@ import { useState } from 'react';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import './App.css';
 import bg from './img/bg.png';
-import data from './data.js';
+import shoesData from './data/shoes.js';
 import Detail from './pages/Detail.js';
 import Card from './component/Card.js';
 
 
 function App() {
 
-  let [shoes] = useState(data)
+  let [shoes] = useState(shoesData)
   let navigate = useNavigate()
 
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Shop</Navbar.Brand>
+          <Navbar.Brand onClick={() => { navigate('/') }}>Shop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={() => { navigate('/detail') }}>Cart</Nav.Link>
@@ -42,7 +42,7 @@ function App() {
             </div>
           </>
         } />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
         <Route path="*" element={<div>404</div>} />
 
         <Route path="/event" element={<><h4>오늘의 이벤트</h4><Outlet></Outlet></>}>
