@@ -1,6 +1,7 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useState } from 'react';
-import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
+// import styled from 'styled-components';
 import './App.css';
 import bg from './img/bg.png';
 import shoesData from './data/shoes.js';
@@ -20,7 +21,7 @@ function App() {
           <Navbar.Brand onClick={() => { navigate('/') }}>Shop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/detail') }}>Cart</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/detail/:id') }}>Detail</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
