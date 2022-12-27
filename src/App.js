@@ -3,11 +3,17 @@ import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import axios from 'axios';
 // import styled from 'styled-components';
+
 import './App.css';
+
 import bg from './img/bg.png';
+
 import shoesData from './data/shoes.js';
-import Detail from './pages/Detail.js';
+
 import Card from './component/Card.js';
+
+import Detail from './pages/Detail.js';
+import Cart from './pages/Cart.js';
 
 
 function App() {
@@ -23,7 +29,7 @@ function App() {
           <Navbar.Brand onClick={() => { navigate('/') }}>Shop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/detail/:id') }}>Detail</Nav.Link>
+            <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -84,12 +90,13 @@ function App() {
           <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>} />
           <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
         </Route>
+
+        <Route path="/cart" element={<Cart />} />
       </Routes>
 
 
     </div>
   );
 }
-
 
 export default App;
