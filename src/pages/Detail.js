@@ -9,6 +9,15 @@ function Detail(props) {
     let [sale, setSale] = useState(0)
     let [qty, setQty] = useState('')
     let [tab, setTab] = useState(0)
+    let [fade, setFade] = useState('')
+
+    useEffect(() => {
+        let timer = setTimeout(() => { setFade('end') }, 10)
+        return () => {
+            clearTimeout(timer)
+            setFade('')
+        }
+    }, [])
 
     useEffect(() => {
         let timer = setTimeout(() => {
@@ -35,7 +44,7 @@ function Detail(props) {
                 }
             </div>
 
-            <div className="container" >
+            <div className={`container start ${fade}`} >
                 <div className="row">
                     <div className="col-md-6">
                         <img src={`https://codingapple1.github.io/shop/shoes${originShoes['id'] + 1}.jpg`} width="100%" alt='' />
@@ -44,7 +53,7 @@ function Detail(props) {
 
 
                     <div className="col-md-6">
-                        <input type="text" class="form-control" style={{ display: 'inline', width: '10%' }} onChange={(e) => { setQty(e.target.value) }} />
+                        <input type="text" class="form-control" style={{ display: 'inline', width: '10%', marginTop: '10px' }} onChange={(e) => { setQty(e.target.value) }} />
                         <h4 className="pt-5">{originShoes['title']}</h4>
                         <p>{originShoes['content']}</p>
                         <p>{originShoes['price']}</p>
@@ -79,8 +88,29 @@ function TabContent({ tab }) {
     // if (tab === 2) {
     //     return <div>내용2</div>
     // }
-    return [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]
+
+    // useEffect(() => {
+    //     document.querySelector('.tab-controller').addEventListener('click', () => {
+    //         document.querySelector('.start').classList.remove('end')
+    //         setTimeout(() => { document.querySelector('.start').classList.add('end') }, 10)
+    //     })
+    // }, [tab])
+    let [fade, setFade] = useState('')
+
+    useEffect(() => {
+        let timer = setTimeout(() => { setFade('end') }, 10)
+        return () => {
+            clearTimeout(timer)
+            setFade('')
+        }
+    }, [tab])
+
+    return <div className={`start ${fade}`}>
+        {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+    </div>
 }
+
+
 
 function Sale() {
     return (
