@@ -1,6 +1,7 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
+import axios from 'axios';
 // import styled from 'styled-components';
 import './App.css';
 import bg from './img/bg.png';
@@ -11,8 +12,9 @@ import Card from './component/Card.js';
 
 function App() {
 
-  let [shoes] = useState(shoesData)
+  let [shoes, setShoes] = useState(shoesData)
   let navigate = useNavigate()
+  let [moreBtnClick, setMoreBtnClick] = useState(0)
 
   return (
     <div className="App">
@@ -39,6 +41,40 @@ function App() {
                 })}
               </div>
             </div>
+            <button className="more-button" onClick={() => {
+              document.querySelector('.more-button').textContent = 'loading...'
+              if (moreBtnClick === 0) {
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                  .then((result) => {
+                    let copy = [...shoes, ...result.data]
+                    setShoes(copy)
+                    document.querySelector('.more-button').textContent = 'more'
+                    setMoreBtnClick(moreBtnClick + 1)
+                  })
+                  .catch(() => {
+                    console.log('ajax요청 실패')
+                    document.querySelector('.more-button').textContent = 'more'
+                  })
+              }
+              if (moreBtnClick === 1) {
+                axios.get('https://codingapple1.github.io/shop/data3.json')
+                  .then((result) => {
+                    let copy = [...shoes, ...result.data]
+                    setShoes(copy)
+                    document.querySelector('.more-button').textContent = 'more'
+                    setMoreBtnClick(moreBtnClick + 1)
+
+                  })
+                  .catch(() => {
+                    console.log('ajax요청 실패')
+                    document.querySelector('.more-button').textContent = 'more'
+                  })
+              }
+              if (moreBtnClick >= 2) {
+                document.querySelector('.more-button').style.display = 'none'
+                setMoreBtnClick(moreBtnClick + 1)
+              }
+            }}>more</button>
           </>
         } />
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
