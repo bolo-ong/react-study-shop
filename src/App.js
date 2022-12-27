@@ -26,8 +26,6 @@ function App() {
         </Container>
       </Navbar>
 
-      {/* <Link to="/">home</Link>
-      <Link to="detail">상세 페이지</Link> */}
 
       <Routes>
         <Route path="/" element={
@@ -51,6 +49,7 @@ function App() {
           <Route path="two" element={<p>생일기념 쿠폰받기</p>} />
         </Route>
       </Routes>
+
 
     </div>
   );
