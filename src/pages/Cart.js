@@ -1,10 +1,11 @@
 import { Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+// import { changeName } from '../store'
+import { addQty } from '../store'
 
 function Cart() {
-
     let state = useSelector((state) => state)
-    console.log(state.cart)
+    let dispatch = useDispatch()
 
     return (
         <Table>
@@ -18,16 +19,18 @@ function Cart() {
             </thead>
             <tbody>
                 {
-                    state.cart.map((data, i) => {
-                        return (
-                            <tr key={i}>
-                                <td>{i + 1}</td>
-                                <td>{state.cart[i]['name']}</td>
-                                <td>{state.cart[i]['count']}</td>
-                                <td></td>
-                            </tr>
-                        )
-                    })
+                    state.cart.map((data, i) =>
+                        <tr key={i}>
+                            <td>{i + 1}</td>
+                            <td>{state.cart[i]['name']}</td>
+                            <td>{state.cart[i]['count']}</td>
+                            <td>
+                                <button onClick={() => {
+                                    dispatch(addQty(data['id']))
+                                }}>+</button>
+                            </td>
+                        </tr>
+                    )
                 }
             </tbody>
         </Table>

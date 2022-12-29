@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Nav from 'react-bootstrap/Nav';
+import { useDispatch } from 'react-redux'
+import { addCart } from '../store'
 
 function Detail(props) {
+
+    let dispatch = useDispatch()
 
     let { id } = useParams();
     let originShoes = props.shoes.find((data) => { return data.id === parseInt(id) }) // ==data.id === parseInt(id), arrow function에선 return과 중괄호 생략가능
@@ -57,7 +61,10 @@ function Detail(props) {
                         <h4 className="pt-5">{originShoes['title']}</h4>
                         <p>{originShoes['content']}</p>
                         <p>{originShoes['price']}</p>
-                        <button className="btn btn-danger">주문하기</button>
+                        <button className="btn btn-danger"
+                            onClick={() => {
+                                dispatch(addCart(originShoes))
+                            }}>주문하기</button>
                     </div>
                 </div>
 
