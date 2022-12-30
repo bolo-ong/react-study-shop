@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Nav from 'react-bootstrap/Nav';
 import { useDispatch } from 'react-redux'
-import { addCart } from '../store'
+import { addItem } from '../store'
 
 function Detail(props) {
 
@@ -63,7 +63,7 @@ function Detail(props) {
                         <p>{originShoes['price']}</p>
                         <button className="btn btn-danger"
                             onClick={() => {
-                                dispatch(addCart(originShoes))
+                                dispatch(addItem(originShoes))
                             }}>주문하기</button>
                     </div>
                 </div>

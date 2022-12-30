@@ -24,34 +24,56 @@ let cart = createSlice({
         { id: 2, name: 'Grey Yordan', count: 1 }
     ],
     reducers: {
-        addQty(state, action) {
-            state.forEach((data) => {
-                if (data['id'] === action.payload) {
-                    data['count'] += 1
-                }
-            })
+        upCount(state, action) {
+            let num = state.findIndex((data) => { return data['id'] === action.payload })
+            state[num]['count'] += 1
+            // if (data['id'] === action.payload) {
+            //     data['count'] += 1
+            // }
         },
-        addCart(state, action) {
+        downCount(state, action) {
+            let num = state.findIndex((data) => { return data['id'] === action.payload })
+            state[num]['count'] -= 1
+
+            if (state[num]['count'] <= 0) {
+                state.splice(num, 1)
+            }
+        },
+
+        addItem(state, action) {
             let newItem = action.payload
-            let arrId = []
+            // let arrId = []
 
-            state.forEach((data, i) => {
-                if (data['id'] === newItem['id']) {
-                    data['count'] += 1
-                }
-            })
+            // state.forEach((data, i) => {
+            //     if (data['id'] === newItem['id']) {
+            //         data['count'] += 1
+            //     }
+            // })
 
-            state.forEach((data, i) => {
-                arrId.push(data['id'])
-            })
+            // state.forEach((data, i) => {
+            //     arrId.push(data['id'])
+            // })
 
-            if (!arrId.includes(newItem['id'])) {
+            // if (!arrId.includes(newItem['id'])) {
+            //     state.push({ id: newItem['id'], name: newItem['title'], count: 1 })
+            // }
+
+            let num = state.findIndex((data) => { return data['id'] === newItem['id'] })
+
+            if (num === -1) {
                 state.push({ id: newItem['id'], name: newItem['title'], count: 1 })
             }
+            else {
+                state[num]['count'] += 1
+            }
+        },
+        removeItem(state, action) {
+            let num = state.findIndex((data) => { return data['id'] === action.payload })
+            state.splice(num, 1)
         }
     }
 })
-export let { addQty, addCart } = cart.actions
+export let { upCount, downCount, addItem, removeItem } = cart.actions
 
 
 export default configureStore({
