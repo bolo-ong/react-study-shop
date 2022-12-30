@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Nav from 'react-bootstrap/Nav';
 import { useDispatch } from 'react-redux'
@@ -14,6 +14,13 @@ function Detail(props) {
     let [qty, setQty] = useState('')
     let [tab, setTab] = useState(0)
     let [fade, setFade] = useState('')
+
+    useEffect(() => {
+        let jsonData = JSON.parse(localStorage.getItem('watched'))
+        jsonData.push(originShoes['id'])
+        jsonData = new Set(jsonData)
+        localStorage.setItem('watched', JSON.stringify([...jsonData]))
+    })
 
     useEffect(() => {
         let timer = setTimeout(() => { setFade('end') }, 10)

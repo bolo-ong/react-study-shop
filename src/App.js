@@ -22,6 +22,14 @@ function App() {
   let navigate = useNavigate()
   let [moreBtnClick, setMoreBtnClick] = useState(0)
 
+
+  useEffect(() => {
+    if (!localStorage.getItem('watched')) {
+      localStorage.setItem('watched', JSON.stringify([]))
+    }
+  }, [])
+
+
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">
