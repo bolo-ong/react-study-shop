@@ -2,16 +2,13 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import axios from 'axios';
+import { useQuery } from 'react-query';
 // import styled from 'styled-components';
 
 import './App.css';
-
 import bg from './img/bg.png';
-
 import shoesData from './data/shoes.js';
-
 import Card from './component/Card.js';
-
 import Detail from './pages/Detail.js';
 import Cart from './pages/Cart.js';
 
@@ -21,6 +18,13 @@ function App() {
   let [shoes, setShoes] = useState(shoesData)
   let navigate = useNavigate()
   let [moreBtnClick, setMoreBtnClick] = useState(0)
+
+
+  let result = useQuery('', () => {
+    return axios.get('https://codingapple1.github.io/userdata.json').then((a) => {
+      return a.data
+    })
+  })
 
 
   useEffect(() => {
@@ -38,6 +42,11 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart') }}>Cart</Nav.Link>
+          </Nav>
+          <Nav className='ms-auto' style={{ color: 'white' }}>
+            {result.isLoading && 'loading...'}
+            {result.data && result.data.name}
+            {result.error && 'error'}
           </Nav>
         </Container>
       </Navbar>
